@@ -1,0 +1,14 @@
+---
+import { company } from '../content/company';
+import { sitePath } from '../lib/site-path';
+
+interface Props {
+  light?: boolean;
+}
+
+const { light = false } = Astro.props;
+---
+<a class:list={['brand', { 'brand--light': light }]} href={sitePath('#top')} aria-label={company.name + ' home'}>
+  <span class="brand__mark" style={{ '--brand-mark': `url("${sitePath('images/pillar-mark.png')}")` }} aria-hidden="true"></span>
+  <span class="brand__wordmark">Three Pillar<span>Electric</span></span>
+</a>

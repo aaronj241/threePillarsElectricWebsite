@@ -1,0 +1,60 @@
+---
+import Brand from './Brand.astro';
+import Icon from './Icon.astro';
+import { sitePath } from '../lib/site-path';
+
+const isProjectPage = Astro.url.pathname.replace(/\/$/, '') === sitePath('project');
+---
+<header class="site-header">
+  <div class="wrap header-inner">
+    <Brand />
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu" hidden>
+      <span class="nav-toggle__menu"><Icon name="menu" /></span>
+      <span class="nav-toggle__close"><Icon name="close" /></span>
+    </button>
+    <nav id="primary-nav" class="primary-nav" aria-label="Main navigation">
+      <a href={sitePath('#services')}>Services</a>
+      <a href={sitePath('#modern-energy')}>Modern Energy</a>
+      <a href={sitePath('#about')}>About</a>
+      <a class="button button--dark header-cta" href={sitePath('project/')} aria-current={isProjectPage ? 'page' : undefined}>Plan a Project</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.nav-toggle');
+  const nav = document.querySelector<HTMLElement>('#primary-nav');
+
+  if (toggle && nav) {
+    const setMenuOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      nav.classList.toggle('is-open', open);
+    };
+
+    toggle.hidden = false;
+    nav.classList.add('is-collapsible');
+
+    toggle.addEventListener('click', () => {
+      setMenuOpen(toggle.getAttribute('aria-expanded') === 'false');
+    });
+
+    nav.addEventListener('click', (event) => {
+      const link = event.target instanceof Element ? event.target.closest('a') : null;
+      if (!link) return;
+
+      setMenuOpen(false);
+      if (link.pathname === window.location.pathname && link.hash) {
+        const destination = document.getElementById(link.hash.slice(1));
+        destination?.focus({ preventScroll: true });
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && nav.classList.contains('is-open')) {
+        setMenuOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+</script>
