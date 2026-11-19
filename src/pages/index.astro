@@ -11,37 +11,39 @@ import { sitePath } from '../lib/site-path';
   description="Three Pillar Electric provides residential and commercial electrical services, panel upgrades, EV charging, and solar electrical integration."
 >
   <main id="main" tabindex="-1">
-    <section class="hero" aria-labelledby="hero-heading">
-      {/* The browser chooses a hero image size using the same breakpoint as the layout. */}
-      <img
-        class="hero__image"
-        src={sitePath('images/electrical-panel-work.webp')}
-        srcset={`${sitePath('images/electrical-panel-work-small.webp')} 560w, ${sitePath('images/electrical-panel-work.webp')} 941w`}
-        sizes="(max-width: 700px) 100vw, 54vw"
-        alt="An electrician working on wiring inside an electrical panel"
-        width="941"
-        height="1672"
-        fetchpriority="high"
-      />
-      <div class="wrap hero__inner">
-        <div class="hero__content">
-          <p class="eyebrow eyebrow--light">Residential & commercial electrical</p>
-          <h1 id="hero-heading">Electrical work. <em>Done right.</em></h1>
-          <p class="hero__description">From everyday repairs to major installations, we help homeowners and businesses get the power they need today and prepare for what’s next.</p>
-          <div class="hero__actions">
-            <a class="button button--lime" href={sitePath('project/')}>Plan a Project</a>
-            <a class="button button--outline" href="#services">Explore Services</a>
+    <div class="home-intro">
+      <section class="hero" aria-labelledby="hero-heading">
+        {/* The browser chooses a hero image size using the same breakpoint as the layout. */}
+        <img
+          class="hero__image"
+          src={sitePath('images/electrical-panel-work.webp')}
+          srcset={`${sitePath('images/electrical-panel-work-small.webp')} 560w, ${sitePath('images/electrical-panel-work.webp')} 941w`}
+          sizes="(max-width: 700px) 100vw, 54vw"
+          alt="An electrician working on wiring inside an electrical panel"
+          width="941"
+          height="1672"
+          fetchpriority="high"
+        />
+        <div class="wrap hero__inner">
+          <div class="hero__content">
+            <p class="eyebrow eyebrow--light">Residential & commercial electrical</p>
+            <h1 id="hero-heading">Electrical work. <em>Done right.</em></h1>
+            <p class="hero__description">From everyday repairs to major installations, we help homeowners and businesses get the power they need today and prepare for what’s next.</p>
+            <div class="hero__actions">
+              <a class="button button--lime" href={sitePath('project/')}>Plan a Project</a>
+              <a class="button button--outline" href="#services">Explore Services</a>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <div class="qualification-band">
-      <ul class="wrap qualification-list" aria-label="Licence and areas of work">
-        <li><Icon name="shield" /> <span>ESA Licence <strong>#{company.licence}</strong></span></li>
-        <li><Icon name="building" /> <span>Residential & Commercial</span></li>
-        <li><Icon name="bolt" /> <span>EV Charging & Solar</span></li>
-      </ul>
+      <div class="qualification-band">
+        <ul class="wrap qualification-list" aria-label="Licence and areas of work">
+          <li><Icon name="shield" /> <span>ESA Licence <strong>#{company.licence}</strong></span></li>
+          <li><Icon name="building" /> <span>Residential & Commercial</span></li>
+          <li><Icon name="bolt" /> <span>EV Charging & Solar</span></li>
+        </ul>
+      </div>
     </div>
 
     {/* Homepage section IDs are navigation targets. The negative tabindex lets navigation move focus to them. */}

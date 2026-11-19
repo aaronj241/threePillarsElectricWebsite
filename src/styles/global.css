@@ -12,6 +12,7 @@
   --lime-hover: #d2ee45;
   --olive: #34411b;
   --font: 'Manrope Variable', Arial, sans-serif;
+  --header-inner-height: 5.1rem;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -39,7 +40,7 @@ section[id], #main { scroll-margin-top: 1rem; }
 
 /* The header sits above page content so the mobile menu can overlay the hero. */
 .site-header { background: var(--paper); position: relative; z-index: 2; border-bottom: 1px solid #e6e9e2; }
-.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; min-height: 5.1rem; }
+.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; min-height: var(--header-inner-height); }
 .brand { display: inline-flex; align-items: center; gap: .72rem; text-decoration: none; flex: none; }
 .brand__mark { width: 2.48rem; aspect-ratio: 192 / 165; background: currentColor; mask: var(--brand-mark) center / contain no-repeat; }
 .brand__wordmark { display: grid; gap: .18rem; font-size: 1rem; font-weight: 850; line-height: 1.04; letter-spacing: -.035em; }
@@ -62,8 +63,16 @@ section[id], #main { scroll-margin-top: 1rem; }
 .button--outline:hover { border-color: var(--lime); color: var(--lime); }
 .header-cta { min-height: 2.7rem; padding: .65rem 1rem; font-size: .9rem; }
 
+/* Fill the first screen below the header and its 1px border. Let the intro grow if its content needs room. */
+.home-intro {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-block-size: calc(100vh - var(--header-inner-height) - 1px);
+  min-block-size: calc(100svh - var(--header-inner-height) - 1px);
+}
+
 /* The hero has its own stacking context so the photo and contrast gradient stay behind the copy. */
-.hero { position: relative; isolation: isolate; overflow: hidden; background: var(--ink-deep); color: var(--white); }
+.hero { display: grid; position: relative; isolation: isolate; overflow: hidden; background: var(--ink-deep); color: var(--white); }
 .hero__image { position: absolute; z-index: -2; inset: 0 0 0 auto; width: 54%; height: 100%; object-fit: cover; object-position: center 38%; }
 .hero::after { content: ''; position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, var(--ink-deep) 0%, var(--ink-deep) 43%, #10191cda 49%, #10191c52 63%, #10191c0c 86%), linear-gradient(0deg, #10191c33, transparent 50%); }
 .hero__inner { display: flex; align-items: center; min-height: clamp(32rem, 43vw, 41rem); padding-block: 4.4rem; }
@@ -161,8 +170,9 @@ h2, .project-heading { font-size: clamp(2.4rem, 4.45vw, 4.25rem); font-weight: 8
 
 /* Mobile navigation and stacked page sections. Keep the hero image sizes attribute in sync. */
 @media (max-width: 700px) {
+  :root { --header-inner-height: 4.5rem; }
   .wrap { width: calc(100% - 2.5rem); }
-  .header-inner { min-height: 4.5rem; flex-wrap: wrap; gap: 0 .75rem; }
+  .header-inner { flex-wrap: wrap; gap: 0 .75rem; }
   .nav-toggle { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 1px solid var(--line); border-radius: .32rem; background: transparent; color: var(--ink); }
   .nav-toggle span { display: grid; }
   .nav-toggle[aria-expanded="false"] .nav-toggle__close, .nav-toggle[aria-expanded="true"] .nav-toggle__menu { display: none; }
