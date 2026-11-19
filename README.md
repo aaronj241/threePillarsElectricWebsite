@@ -2,6 +2,8 @@
 
 An Astro website for Three Pillar Electric’s residential, commercial, EV charging, and solar electrical services.
 
+This is a work in progress website
+
 ## Local development
 
 Use Node.js 22.23.4 or newer.
