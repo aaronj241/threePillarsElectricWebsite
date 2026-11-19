@@ -1,8 +1,10 @@
 ---
+// Renders the shared header and manages the collapsible mobile navigation.
 import Brand from './Brand.astro';
 import Icon from './Icon.astro';
 import { sitePath } from '../lib/site-path';
 
+// Match the current route after allowing for the hosting base path and trailing slash.
 const isProjectPage = Astro.url.pathname.replace(/\/$/, '') === sitePath('project');
 ---
 <header class="site-header">
@@ -26,12 +28,14 @@ const isProjectPage = Astro.url.pathname.replace(/\/$/, '') === sitePath('projec
   const nav = document.querySelector<HTMLElement>('#primary-nav');
 
   if (toggle && nav) {
+    // Keep the visual menu state and the accessible toggle state in sync.
     const setMenuOpen = (open: boolean) => {
       toggle.setAttribute('aria-expanded', String(open));
       toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
       nav.classList.toggle('is-open', open);
     };
 
+    // Leave the links visible on mobile until JavaScript can operate the toggle.
     toggle.hidden = false;
     nav.classList.add('is-collapsible');
 
@@ -44,6 +48,7 @@ const isProjectPage = Astro.url.pathname.replace(/\/$/, '') === sitePath('projec
       if (!link) return;
 
       setMenuOpen(false);
+      // Move keyboard focus to the linked section and let the browser handle scrolling.
       if (link.pathname === window.location.pathname && link.hash) {
         const destination = document.getElementById(link.hash.slice(1));
         destination?.focus({ preventScroll: true });
@@ -51,6 +56,7 @@ const isProjectPage = Astro.url.pathname.replace(/\/$/, '') === sitePath('projec
     });
 
     document.addEventListener('keydown', (event) => {
+      // Return focus to the toggle when Escape dismisses the menu.
       if (event.key === 'Escape' && nav.classList.contains('is-open')) {
         setMenuOpen(false);
         toggle.focus();

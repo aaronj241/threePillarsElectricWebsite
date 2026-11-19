@@ -1,4 +1,5 @@
 ---
+// Renders a homepage service card using the service details in company.ts.
 import { services } from '../content/company';
 import { sitePath } from '../lib/site-path';
 import Icon from './Icon.astro';
@@ -8,6 +9,7 @@ interface Props {
 }
 
 const { service } = Astro.props;
+// Energy links to the homepage energy section. Other cards preselect a service on the project form.
 const isEnergy = service.id === 'energy';
 ---
 <article class="service-card">

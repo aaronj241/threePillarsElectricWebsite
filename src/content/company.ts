@@ -1,12 +1,15 @@
+// Stores company details and the service copy used across the website.
 export const company = {
   name: 'Three Pillar Electric',
   licence: '7019256',
+  // The project page displays each contact link once its value is filled in.
   contact: {
     email: '',
     phone: '',
   },
 };
 
+// Service IDs are shared by the homepage links and the project form's service options.
 export const services = [
   {
     id: 'residential',
@@ -40,6 +43,7 @@ export const services = [
   },
 ] as const;
 
+// The Modern Energy section expands on the EV and solar service card.
 export const energyServices = [
   {
     icon: 'plug',
@@ -58,6 +62,7 @@ export const energyServices = [
   },
 ] as const;
 
+// The About section uses these cards to explain how the company works.
 export const values = [
   {
     icon: 'shield',

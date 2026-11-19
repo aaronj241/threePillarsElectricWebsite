@@ -1,4 +1,6 @@
 ---
+// Renders an inline SVG icon from a fixed set of interface symbols.
+// The surrounding heading, link, or button supplies the accessible text.
 const paths = {
   home: '<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/>',
   building: '<path d="M4 21h16M6 21V4h9v17m0-12h3v12M9 8h3m-3 4h3m-3 4h3"/>',
@@ -15,6 +17,7 @@ const paths = {
 };
 
 interface Props {
+  // Restrict callers to the SVG paths defined above.
   name: keyof typeof paths;
 }
 

@@ -1,3 +1,4 @@
+# Builds the Astro site from main and publishes the static output to GitHub Pages.
 name: Deploy website to GitHub Pages
 
 on:
@@ -6,11 +7,13 @@ on:
   workflow_dispatch:
 
 concurrency:
+  # Serialize deployments so overlapping pushes don't interrupt an active publish.
   group: github-pages
   cancel-in-progress: false
 
 jobs:
   build:
+    # Manual runs let users select a branch. Publish from main only.
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
@@ -30,9 +33,11 @@ jobs:
           node-version: '24'
           cache: npm
       - name: Install dependencies
+        # Use the committed lockfile for reproducible installs on the runner.
         run: npm ci
       - name: Build the Astro site
         run: npm run build
+        # Pages supplies the origin and base path for repository URLs and custom domains.
         env:
           PAGES_SITE_ORIGIN: ${{ steps.pages.outputs.origin }}
           PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
@@ -42,10 +47,12 @@ jobs:
           path: dist
 
   deploy:
+    # Publish the artifact from this run after the build succeeds.
     needs: build
     runs-on: ubuntu-latest
     permissions:
       pages: write
+      # Pages uses an OpenID Connect token to verify the deployment source.
       id-token: write
     environment:
       name: github-pages

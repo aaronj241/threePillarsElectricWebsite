@@ -1,4 +1,5 @@
 ---
+// Builds the homepage with the hero, licence summary, service cards, and company information.
 import Icon from '../components/Icon.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import { company, energyServices, services, values } from '../content/company';
@@ -11,6 +12,7 @@ import { sitePath } from '../lib/site-path';
 >
   <main id="main" tabindex="-1">
     <section class="hero" aria-labelledby="hero-heading">
+      {/* The browser chooses a hero image size using the same breakpoint as the layout. */}
       <img
         class="hero__image"
         src={sitePath('images/electrical-panel-work.webp')}
@@ -42,6 +44,7 @@ import { sitePath } from '../lib/site-path';
       </ul>
     </div>
 
+    {/* Homepage section IDs are navigation targets. The negative tabindex lets navigation move focus to them. */}
     <section class="services-section section-space" id="services" tabindex="-1" aria-labelledby="services-heading">
       <div class="wrap">
         <div class="section-heading">
@@ -75,6 +78,7 @@ import { sitePath } from '../lib/site-path';
               </li>
             ))}
           </ul>
+          {/* The service query selects EV and Solar when the project form opens. */}
           <a class="button button--dark" href={sitePath('project/?service=energy')}>Plan an Energy Upgrade</a>
         </div>
       </div>

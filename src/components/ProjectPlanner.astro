@@ -1,4 +1,5 @@
 ---
+// Renders the project request form, validates entries, and manages its browser-only confirmation.
 import { company, services } from '../content/company';
 import Icon from './Icon.astro';
 ---
@@ -16,8 +17,10 @@ import Icon from './Icon.astro';
       )}
     </div>
 
+    {/* Reveal the form after its browser submit handler is ready. */}
     <form class="project-form" id="project-form" hidden>
       <div class="project-fields">
+        {/* Name and location require a letter and support accents and common punctuation. */}
         <label for="project-name">Full name
           <input id="project-name" name="name" type="text" autocomplete="name" maxlength="100" pattern="(?=.*\p{L})[\p{L}\p{M} .'’\u002D]+" title="Use letters, spaces, periods, apostrophes, or hyphens." required />
         </label>
@@ -36,6 +39,7 @@ import Icon from './Icon.astro';
         </label>
         <label for="project-phone">
           <span class="field-label">Phone number <span>(optional)</span></span>
+          {/* A formatted ten-digit number takes 14 characters including punctuation. */}
           <input id="project-phone" name="phone" type="tel" autocomplete="tel-national" maxlength="14" pattern="\([0-9]{3}\) [0-9]{3}-[0-9]{4}" title="Enter a 10-digit phone number." />
         </label>
       </div>
@@ -70,21 +74,26 @@ import Icon from './Icon.astro';
   const restart = document.querySelector<HTMLButtonElement>('#new-project-request');
 
   if (form && service && nameField && phoneField && description && confirmation && restart) {
+    // A service link can prefill the menu using an existing option value.
     const projectUrl = new URL(window.location.href);
     const requestedService = projectUrl.searchParams.get('service');
     if (requestedService && Array.from(service.options).some((option) => option.value === requestedService)) {
       service.value = requestedService;
     }
 
+    // Format as the visitor types and when the browser commits an autofilled value.
     const formatPhoneField = () => formatPhoneNumber(phoneField);
     phoneField.addEventListener('input', formatPhoneField);
     phoneField.addEventListener('change', formatPhoneField);
     formatPhoneField();
+    // Clear the whitespace error when the visitor edits the field so it can be checked again.
     description.addEventListener('input', () => description.setCustomValidity(''));
 
     form.addEventListener('submit', (event) => {
+      // Show the confirmation locally while the form has no submission or email integration.
       event.preventDefault();
 
+      // The browser's required check accepts spaces, so also check the trimmed description.
       if (!description.value.trim()) {
         description.setCustomValidity('Describe the electrical work you need.');
         description.reportValidity();
@@ -93,11 +102,13 @@ import Icon from './Icon.astro';
 
       form.hidden = true;
       confirmation.hidden = false;
+      // Move focus from the hidden form to the confirmation for keyboard and screen reader users.
       confirmation.focus();
     });
 
     restart.addEventListener('click', () => {
       form.reset();
+      // Clear the original service selection from the URL so a reload opens a blank form.
       if (projectUrl.searchParams.has('service')) {
         projectUrl.searchParams.delete('service');
         window.history.replaceState(window.history.state, '', projectUrl);
@@ -110,6 +121,7 @@ import Icon from './Icon.astro';
     form.hidden = false;
   }
 
+  // Rebuild the display from up to ten digits for both typed and pasted input.
   function formatPhoneNumber(field: HTMLInputElement) {
     const original = field.value;
     const digits = original.replace(/\D/g, '').slice(0, 10);
@@ -124,6 +136,7 @@ import Icon from './Icon.astro';
     const caret = field.selectionStart;
     field.value = formatted;
     if (caret !== null && caret < original.length) {
+      // Keep the caret after the same digit when punctuation shifts during an edit.
       const digitsBeforeCaret = original.slice(0, caret).replace(/\D/g, '').length;
       const digitPositions = Array.from(formatted.matchAll(/\d/g), (match) => match.index + 1);
       const position = digitPositions[Math.min(digitsBeforeCaret, digits.length) - 1] ?? 0;

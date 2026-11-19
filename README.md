@@ -26,8 +26,13 @@ The workflow gets the domain and base path from GitHub Pages, so links and image
 - `src/components/` — Brand, navigation, service cards, icons, and project planner.
 - `src/content/company.ts` — Company information, contact settings, services, and approach.
 - `src/layouts/SiteLayout.astro` — Shared page document, fonts, and metadata.
+- `src/lib/site-path.ts` — Internal links and asset paths that respect the hosting base path.
 - `src/styles/global.css` — Design tokens, layout, and responsive styles.
 - `public/images/` — Web-ready crops and compressed images used by the site.
 - `imageAssets/` — Original supplied logos and stock photos.
+- `astro.config.mjs` — Static build settings and hosting paths supplied by GitHub Pages.
+- `tsconfig.json` — TypeScript rules for the Astro project.
+- `package.json` — npm scripts and direct dependencies.
+- `package-lock.json` — npm's generated dependency tree, including the exact versions used by `npm ci`.
 
 The project request form displays a confirmation preview in the visitor’s browser. Add verified business contact details to `company.contact` in `src/content/company.ts` to show email and phone links beside it.
